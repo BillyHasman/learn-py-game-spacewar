@@ -39,11 +39,22 @@ while running:
     playerX += (keys[pygame.K_RIGHT] - keys[pygame.K_LEFT]) * speedX
     playerY += (keys[pygame.K_DOWN] - keys[pygame.K_UP]) * speedY
 
-    print(playerX)
+    print(playerX, playerY)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+
+    # Boundaries player inside screen
+    if playerX <= 0:
+        playerX = 0
+    elif playerX >=1323:
+        playerX = 1323
+
+    if playerY <= 0:
+        playerY = 0
+    elif playerY >=750:
+        playerY = 750
 
 
     player(playerX,playerY)
