@@ -14,15 +14,16 @@ pygame.display.set_icon(icon)
 # Player 
 playerImg = pygame.image.load('Assets/img/player.png')
 playerX = 645 
-playerY = 450
+playerY = 550
 
 # New width and height for player will be (40, 40)
-img_resize = pygame.transform.scale(playerImg, (40, 40))
+player_resize = pygame.transform.scale(playerImg, (40, 40))
+
 
 # Function
-def player():
-    # screen.blit(playerImg, (playerX,playerY)) # Drop player to screenGame
-    screen.blit(img_resize, (playerX,playerY))
+def player(x,y):
+    # screen.blit(playerImg, (playerX,playerY)) 
+    screen.blit(player_resize, (x,y)) # Drop player to screenGame
     
 
 # Game Loop
@@ -32,10 +33,18 @@ while running:
     # Add blackBG
     screen.fill((0,0,0))
 
+    speedX = 0.3
+    speedY = 0.2
+    keys = pygame.key.get_pressed()
+    playerX += (keys[pygame.K_RIGHT] - keys[pygame.K_LEFT]) * speedX
+    playerY += (keys[pygame.K_DOWN] - keys[pygame.K_UP]) * speedY
+
+    print(playerX)
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
 
-    player()
+    player(playerX,playerY)
     pygame.display.update()
