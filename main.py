@@ -26,8 +26,8 @@ pygame.display.set_icon(icon)
 playerImg = pygame.image.load('Assets/img/player.png')
 playerX = 645
 playerY = 550
-speedX = 0.5
-speedY = 0.4
+speedX = 0.8
+speedY = 0.5
 
 # New width and height for player will be (60, 60)
 player_resize = pygame.transform.scale(playerImg, (60, 60))
@@ -68,6 +68,10 @@ font = pygame.font.Font('Assets/font/evil_empire.otf', 64)
 textX = 10
 textY = 10
 
+# Game Over text
+over_font = pygame.font.Font('Assets/font/evil_empire.otf', 1024)
+
+
 # Function Player
 def player(x, y):
     screen.blit(player_resize, (x, y))  # Drop player to screenGame
@@ -94,6 +98,11 @@ def isCollision(enemyX, enemyY, bulletX, bulletY):
 def show_score(x,y):
     score = font.render("Score: " + str(score_value), True, (255,255,255))
     screen.blit(score, (x, y))
+
+# Show Game Over
+def game_over_text():
+    over_text = font.render("GAME OVER", True, (255,255,255))
+    screen.blit(over_text, (550,350))
 
 # Game Loop
 running = True
@@ -133,6 +142,14 @@ while running:
 
     # Enemy Movement
     for i in range(num_of_enemies):
+
+        # Game Over
+        if enemyY[i] > 200:
+            for j in range(num_of_enemies):
+                enemyY[j] = 3000
+            game_over_text()
+            break
+
         enemyX[i] += enemyX_change[i]
         # Check boundaries and update direction and position
         if enemyX[i] <= 0 or enemyX[i] >= 1323:
