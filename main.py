@@ -57,7 +57,11 @@ bullet_resize = pygame.transform.scale(bulletImg, (32, 32))
 bullet_state = "ready"
 
 # Init Score
-score = 0
+score_value = 0
+font = pygame.font.Font('Assets/evil_empire.otf', 64)
+
+textX = 10
+textY = 10
 
 # Function Player
 def player(x, y):
@@ -80,6 +84,11 @@ def isCollision(enemyX, enemyY, bulletX, bulletY):
         return True
     else:
         return False
+
+# Show Score Game
+def show_score(x,y):
+    score = font.render("Score: " + str(score_value), True, (255,255,255))
+    screen.blit(score, (x, y))
 
 # Game Loop
 running = True
@@ -127,14 +136,14 @@ while running:
         if collision:
             bulletY = playerY - 10
             bullet_state = "ready"
-            score += 1
-            print(score)
+            score_value += 1
             enemyX[i] = random.randint(0, 1323)
             enemyY[i] = random.randint(50, 150)
 
         enemy(enemyX[i], enemyY[i], i)
 
     player(playerX, playerY)
+    show_score(textX,textY)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
