@@ -18,8 +18,8 @@ To run this game, you need to have Python installed on your system. You can down
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/BillyHasman/py-game-spacewar.git
-    cd py-game-spacewar
+    git clone https://github.com/BillyHasman/py-game-spaceInvaders.git
+    cd py-game-spaceInvaders
     ```
 
 2. Install Pygame:
@@ -30,4 +30,4 @@ To run this game, you need to have Python installed on your system. You can down
 ### Running the Game
 Navigate to the project directory and run the game script:
 ```sh
-python py-game-spacewar
+python py-game-spaceInvaders
