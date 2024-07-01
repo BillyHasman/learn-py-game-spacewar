@@ -26,8 +26,8 @@ pygame.display.set_icon(icon)
 playerImg = pygame.image.load('Assets/img/player.png')
 playerX = 645
 playerY = 550
-speedX = 0.8
-speedY = 0.5
+speedX = 1.5
+speedY = 1
 
 # New width and height for player will be (60, 60)
 player_resize = pygame.transform.scale(playerImg, (60, 60))
@@ -104,6 +104,13 @@ def game_over_text():
     over_text = font.render("GAME OVER", True, (255,255,255))
     screen.blit(over_text, (550,350))
 
+# Draw Dashed Line
+def draw_dashed_line(y, color, dash_length=10):
+    x_start = 0
+    while x_start < 1366:
+        pygame.draw.line(screen, color, (x_start, y), (x_start + dash_length, y))
+        x_start += 2 * dash_length
+
 # Game Loop
 running = True
 while running:
@@ -113,10 +120,17 @@ while running:
     # Background Image
     screen.blit(background, (0, 0))
 
+    # Draw Dashed Line
+    draw_dashed_line(350, (255, 255, 255))
+
     # Player Movement
     keys = pygame.key.get_pressed()
     playerX += (keys[pygame.K_RIGHT] - keys[pygame.K_LEFT]) * speedX
     playerY += (keys[pygame.K_DOWN] - keys[pygame.K_UP]) * speedY
+
+    # Boundaries player inside screen and above Y = 350
+    playerX = max(0, min(playerX, 1323))
+    playerY = max(350, min(playerY, 750))
 
     # Bullet Trigger
     if keys[pygame.K_SPACE]:
@@ -144,7 +158,7 @@ while running:
     for i in range(num_of_enemies):
 
         # Game Over
-        if enemyY[i] > 200:
+        if enemyY[i] > 300:
             for j in range(num_of_enemies):
                 enemyY[j] = 3000
             game_over_text()
@@ -165,7 +179,13 @@ while running:
             bullet_state = "ready"
             score_value += 1
             enemyX[i] = random.randint(0, 1323)
-            enemyY[i] = random.randint(50, 150)
+            enemyY[i] = random.randint(50, 70)
+            enemyX_change[i] *= 1.5
+            print(enemyX_change)
+
+        # Reset enemy speed if it exceeds 3.5 or is less than -3.5
+        if enemyX_change[i] >= 4 or enemyX_change[i] <= -4:
+            enemyX_change[i] = 0.7 if enemyX_change[i] > 0 else -0.7
 
         enemy(enemyX[i], enemyY[i], i)
 
