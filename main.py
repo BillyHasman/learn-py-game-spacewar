@@ -181,7 +181,7 @@ while running:
             enemyX[i] = random.randint(0, 1323)
             enemyY[i] = random.randint(50, 70)
             enemyX_change[i] *= 1.5
-            print(enemyX_change)
+            # print(enemyX_change)
 
         # Reset enemy speed if it exceeds 3.5 or is less than -3.5
         if enemyX_change[i] >= 4 or enemyX_change[i] <= -4:
